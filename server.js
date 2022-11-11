@@ -1,12 +1,12 @@
-//https://socket.io/docs/v4/server-initialization/
 const express = require("express");
 const app = express();
+const port = process.env.PORT || 8080;
 
 //IMPLEMENTACION
 const httpServer = require("http").createServer(app);
 const io = require("socket.io")(httpServer);
 
-httpServer.listen(3000, () => console.log("SERVER ON"));
+httpServer.listen(port, () => console.log("SERVER ON"));
 
 app.use(express.json());
 app.use(express.static(__dirname + "/public"));
@@ -20,14 +20,13 @@ app.get("/", (req, res) => {
 const chat = [];
 
 io.on("connect", (socket) => {
-	/* socket.on("msg", (data) => {
-		console.log(data);
-	}); */
-
-	/* socket.emit("msg", "hola front"); */
+	let nombre;
+	socket.on("msg", (data) => {
+		nombre = data;
+	});
 
 	socket.on("msgChat", (data) => {
-		chat.push({ ...data });
+		chat.push({ ...data, nombre });
 
     io.sockets.emit("chat", chat);
 	});

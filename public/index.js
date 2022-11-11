@@ -1,29 +1,22 @@
 const socket = io();
-
+let nombre = prompt('Como es tu nombre')
 socket.on("connect", () => {
-	console.log("Conectado");
+	console.log(`${socket.id} entro a la sala de chat`);
 });
 
-/* socket.emit("msg", "Hola back"); */
-
-/* socket.on("msg", (data) => {
-	console.log(data);
-}); */
+socket.emit("msg",  nombre);
 
 socket.on("chat", (data) => {
-	console.log(data);
 	let msgChat = "";
 	data.forEach(({nombre, msg}) => {
         msgChat += `${nombre} : ${msg}` + "<br>"
     });
-    //console.log(msgChat);
     document.querySelector("#chat").innerHTML = msgChat;
 })
 
 let enviar = document.querySelector("#enviar");
 
 enviar.addEventListener("click", () => {
-	let nombre = document.querySelector("#nombre").value;
 	let msg = document.querySelector("#msg").value;
 	socket.emit("msgChat", { nombre, msg });
 });

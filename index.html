@@ -10,9 +10,11 @@
   </head>
   <body>
     <h1>Mini chat</h1>
-        <input type="text" id="nombre">
-        <input type="text" id="msg">
+      <form onsubmit="return false">
+        <label for="msg">Mensaje</label><br>
+        <input type="text" id="msg"><br>
         <button type="submit" id="enviar">Enviar</button>
+      </form>
         <div id="chat"></div>
   </body>
 </html>
